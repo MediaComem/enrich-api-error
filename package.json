@@ -1,6 +1,6 @@
 {
   "name": "enrich-api-error",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add an API's HTTP response to an error's stack trace for debugging.",
   "main": "index.js",
   "scripts": {
