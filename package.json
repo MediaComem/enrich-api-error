@@ -26,6 +26,11 @@
     "url": "https://github.com/MediaComem/enrich-api-error/issues"
   },
   "homepage": "https://github.com/MediaComem/enrich-api-error#readme",
+  "files": [
+    "index.js",
+    "LICENSE.txt",
+    "README.md"
+  ],
   "dependencies": {
     "http-status": "^1.0.1"
   },
