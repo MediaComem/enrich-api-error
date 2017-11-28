@@ -3,6 +3,7 @@
 Add an API's HTTP response to an error's stack trace for debugging.
 
 [![npm version](https://badge.fury.io/js/enrich-api-error.svg)](https://badge.fury.io/js/enrich-api-error)
+[![Dependency Status](https://gemnasium.com/badges/github.com/MediaComem/enrich-api-error.svg)](https://gemnasium.com/github.com/MediaComem/enrich-api-error)
 [![Build Status](https://travis-ci.org/MediaComem/enrich-api-error.svg?branch=master)](https://travis-ci.org/MediaComem/enrich-api-error)
 [![Coverage Status](https://coveralls.io/repos/github/MediaComem/enrich-api-error/badge.svg?branch=master)](https://coveralls.io/github/MediaComem/enrich-api-error?branch=master)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
