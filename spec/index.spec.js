@@ -18,7 +18,7 @@ describe('enrich-api-error', () => {
         foo: 'bar',
         baz: 'qux'
       },
-      status: 200
+      statusCode: 200
     });
 
     const enrichedErr = enrichApiError(err, res);
@@ -39,7 +39,7 @@ describe('enrich-api-error', () => {
         foo: 'bar',
         baz: 'qux'
       },
-      status: 200
+      statusCode: 200
     });
 
     const enrichedErr = enrichApiError(err, res);
@@ -58,7 +58,7 @@ describe('enrich-api-error', () => {
         foo: 'bar',
         baz: 'qux'
       },
-      status: 200
+      statusCode: 200
     });
 
     const resString = 'HTTP/1.1 200 OK\nfoo: bar\nbaz: qux\n\nfoobar';
@@ -82,12 +82,12 @@ describe('enrich-api-error', () => {
     it('should print an HTTP response as a string', async function() {
 
       const res = mockHttpResponse({
-        body: 'foobar',
+        text: 'foobar',
         headers: {
           foo: 'bar',
           baz: 'qux'
         },
-        status: 200
+        statusCode: 200
       });
 
       const string = responseToString(res);
@@ -103,11 +103,60 @@ describe('enrich-api-error', () => {
           foo: 'bar',
           baz: 'qux'
         },
+        statusCode: 200
+      });
+
+      const string = responseToString(res);
+      expect(string).to.eql('HTTP/1.1 200 OK\ncontent-type: application/json\nfoo: bar\nbaz: qux\n\n{\n  "foo": "bar"\n}');
+    });
+
+    it('should print a supertest response as a string', async function() {
+
+      const res = mockHttpResponse({
+        body: { foo: 'bar' },
+        headers: {
+          'content-type': 'application/json',
+          foo: 'bar',
+          baz: 'qux'
+        },
+        httpVersion: null,
+        res: {
+          httpVersion: '1.1'
+        },
         status: 200
       });
 
       const string = responseToString(res);
       expect(string).to.eql('HTTP/1.1 200 OK\ncontent-type: application/json\nfoo: bar\nbaz: qux\n\n{\n  "foo": "bar"\n}');
+    });
+
+    it('should work with unknown HTTP status codes', async function() {
+
+      const res = mockHttpResponse({
+        body: 'foobar',
+        headers: {
+          foo: 'bar',
+          baz: 'qux'
+        },
+        statusCode: 299
+      });
+
+      const string = responseToString(res);
+      expect(string).to.eql('HTTP/1.1 299\nfoo: bar\nbaz: qux\n\nfoobar');
+    });
+
+    it('should work with no response body', async function() {
+
+      const res = mockHttpResponse({
+        headers: {
+          foo: 'bar',
+          baz: 'qux'
+        },
+        statusCode: 204
+      });
+
+      const string = responseToString(res);
+      expect(string).to.eql('HTTP/1.1 204 No Content\nfoo: bar\nbaz: qux');
     });
   });
 });

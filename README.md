@@ -70,3 +70,7 @@ describe('enrich-api-error', () => {
 //      at <anonymous>
 //      at process._tickCallback (internal/process/next_tick.js:188:7)
 ```
+
+**enrich-api-error** expects the response body to be available as the `body` or
+`text` property of the response object.  (This is usually provided by Node.js
+HTTP libraries such as request or supertest.)

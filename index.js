@@ -23,9 +23,18 @@ function enrichError(err, res) {
 
 function responseToString(res) {
 
-  let desc = `HTTP/${res.httpVersion} ${res.status}`;
+  let httpVersion = res.httpVersion;
 
-  const code = httpStatuses[res.status];
+  // Make it work with supertest responses
+  if (!httpVersion && res.res && res.res.httpVersion) {
+    httpVersion = res.res.httpVersion;
+  }
+
+  let status = res.statusCode !== undefined ? res.statusCode : res.status;
+
+  let desc = `HTTP/${httpVersion} ${status}`;
+
+  const code = httpStatuses[status];
   if (code) {
     desc = `${desc} ${code}`;
   }
@@ -44,6 +53,8 @@ function responseToString(res) {
     } else {
       desc = `${desc}${res.body.toString()}`;
     }
+  } else if (res.text) {
+    desc = `${desc}\n\n${res.text.toString()}`;
   }
 
   return desc;
